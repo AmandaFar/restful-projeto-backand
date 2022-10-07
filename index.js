@@ -1,51 +1,25 @@
-//ESSE index que faz o chamamento, eh o index principal
 
-//criaando um servidor web
-//criacao da constante e uso do modulo express
-//o express ja chama o http internamente
-//o modulo express tem varios recursos:
-//Gerenciar requisições de diferentes verbos HTTP em diferentes URLs.
-//Definir as configurações comuns da aplicação web,
-// como a porta a ser usada para conexão e a localização dos modelos que são usados para renderizar a resposta, etc.
-const express= require('express');
+//exportando o modulo para o index que faz o chamamento
+//chama o modulo e informa o q estah exportanto, no o routes, a rota
+//entao q vc criar em routes serah exportado para o index principal, o de chamamento, como um modulo
+module.exports = (app) =>{
 
+//momento da criacao do servidor com as chamadas e respostas (req, res)
+// metodo get para criacao de rotas
+//acessivel pelo metodo get na applicacao
+//o paramentro '/' é justamente a rota
+app.get('/', (req, res) => {
 
-//a biblioteca do consign é sugerida para
-//facilitar o gerenciamento de rotas no express
-//criacao da constante e uso do modulo consign
-const consign = require('consign');
+    //qual o status dessa conexao
+           //protocolo http
+           res.statusCode = 200;
 
-//solicitando o body parser, p/ interpretação do metodo post
-//criacao da const
-//body- parser eh nome do modulo
-const bodyparser = require('body-parser');
-
-//metodo para validacoes
-//criacao da const
-const expressValidator = require('express-validator');
-
-
-//variavel para invocar o express e saber tdas as informacoes funcionanda dentro
-let app = express();
-
-//para dependendo da condificacao q vier, ele vai entender tb
-app.use(bodyparser.urlencoded({extended: false}));
-
-//transforma o objeto em json
-app.use(bodyparser.json());
-
-//para invocar o metodo
-app.use(expressValidator());
-
-//invocar o consign e inclui a pasta routes dentro do app
-//inclui todos os arquivo dessa pasta
-//inclui todos os arquivos da pasta util
-consign().include('routes').include('utils').into(app);
-
-
-//ouvir o servidor na porta 3000, o ip local e funcao do que ele tem q executar
-app.listen(3000, '127.0.0.1', () => {
-
-    console.log("servidor rodando!");
+           //enviamos uma resposta, 'res', com um html
+           //'content-type', tipo de contexto
+           //'text/html' para informar que eh um html
+           res.setHeader('Content-Type', 'text/html');
+           //processa como html
+           res.end('<h1>Olá</h>');
 
 });
+}
